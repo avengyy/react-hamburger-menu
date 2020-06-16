@@ -1,48 +1,49 @@
-import React, { useState, useEffect } from "react";
-import { withRouter, Link } from "react-router-dom";
-import Hamburger from "./Hamburger";
+import React, { useState, useEffect } from 'react';
+import { withRouter, Link } from 'react-router-dom';
+import Hamburger from './Hamburger';
 
 const Header = ({ history }) => {
-  // State of our Menu
+  // State for menu
   const [state, setState] = useState({
     initial: false,
     clicked: null,
-    menuName: "Menu"
+    menuName: 'Menu',
   });
-  // State of our button
+
+  // State for menu button
   const [disabled, setDisabled] = useState(false);
 
-  //Use Effect
   useEffect(() => {
-    //Listening for page changes.
+    // Listen for page changes
     history.listen(() => {
-      setState({ clicked: false, menuName: "Menu" });
+      setState({ ...state, clicked: false, menuName: 'Menu' });
     });
-  }, [history]);
+  });
 
-  // Toggle menu
   const handleMenu = () => {
     disableMenu();
     if (state.initial === false) {
       setState({
         initial: null,
         clicked: true,
-        menuName: "Close"
+        menuName: 'Close',
       });
     } else if (state.clicked === true) {
       setState({
+        ...state,
         clicked: !state.clicked,
-        menuName: "Menu"
+        menuName: 'Menu',
       });
     } else if (state.clicked === false) {
       setState({
+        ...state,
         clicked: !state.clicked,
-        menuName: "Close"
+        menuName: 'Close',
       });
     }
   };
 
-  //Determine if out menu button should be disabled
+  // Determine if menu button should be disabled
   const disableMenu = () => {
     setDisabled(!disabled);
     setTimeout(() => {
